@@ -16,8 +16,8 @@ playerImg = pygame.image.load("res/player.png")
 playerX, playerY = 370, 480
 
 
-def player():
-    screen.blit(playerImg, (playerX, playerY))
+def player(x, y):
+    screen.blit(playerImg, (x, y))
 
 
 # Game Loop with Quit event
@@ -30,5 +30,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    player()
+    # Animating the Spaceship to move
+    playerX += 0.1
+    playerY -= 0.1
+    player(playerX, playerY)
     pygame.display.update()  # Very important line to display changes
