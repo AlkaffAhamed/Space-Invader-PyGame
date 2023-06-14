@@ -11,14 +11,24 @@ pygame.display.set_caption("Space Invader PyGame")
 icon = pygame.image.load("res/ufo.png")
 pygame.display.set_icon(icon)
 
+# Player
+playerImg = pygame.image.load("res/player.png")
+playerX, playerY = 370, 480
+
+
+def player():
+    screen.blit(playerImg, (playerX, playerY))
+
+
 # Game Loop with Quit event
 running = True
 while running:
+    # Black background colour (RGB values)
+    screen.fill((0, 0, 0))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # Change background colour (RGB values)
-    screen.fill((255, 255, 0))
-    screen.fill((255, 0, 0), (20, 20, 40, 40))
+    player()
     pygame.display.update()  # Very important line to display changes
