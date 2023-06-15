@@ -33,11 +33,24 @@ def enemy(x, y):
     screen.blit(enemyImg, (x, y))
 
 
+# Bullet
+bulletImg = pygame.image.load("res/bullet.png")
+bulletX, bulletY = 0, 480
+bulletX_change, bulletY_change = 0, 10
+bullet_state = "ready"
+
+
+def fire_bullet(x, y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x, y))
+
+
 # Game Loop with Quit event
 running = True
 while running:
     # Background
-    screen.blit(background,(0,0))
+    screen.blit(background, (0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -49,6 +62,8 @@ while running:
                 playerX_change = -5
             if event.key == pygame.K_RIGHT:
                 playerX_change = 5
+            if event.key == pygame.K_SPACE:
+                fire_bullet(playerX, bulletY)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
