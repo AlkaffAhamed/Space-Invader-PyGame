@@ -91,6 +91,11 @@ while running:
         enemyX_change = -3
         enemyY += enemyY_change
 
+    # Bullet movement
+    if bullet_state=="fire":
+        fire_bullet(playerX,bulletY)
+        bulletY -= bulletY_change
+
     player(playerX, playerY)
     enemy(enemyX, enemyY)
     pygame.display.update()  # Very important line to display changes
