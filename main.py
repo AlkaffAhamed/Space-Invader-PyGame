@@ -25,7 +25,7 @@ def player(x, y):
 # Enemy
 enemyImg = pygame.image.load("res/enemy.png")
 enemyX, enemyY = random.randint(0, 800), random.randint(50, 150)
-enemyX_change = 0
+enemyX_change, enemyY_change = 0.3, 40
 
 
 def enemy(x, y):
@@ -63,6 +63,17 @@ while running:
         playerX = 0
     elif playerX > 736:
         playerX = 736
+
+    # Enemy movement
+    # 0 < enemyX < 736
+    # Once boundary is hit, enemy moves down by 40 px
+    enemyX += enemyX_change
+    if enemyX <= 0:
+        enemyX_change = 0.3
+        enemyY += enemyY_change
+    elif enemyX >= 736:
+        enemyX_change = -0.3
+        enemyY += enemyY_change
 
     player(playerX, playerY)
     enemy(enemyX, enemyY)
