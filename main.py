@@ -43,5 +43,15 @@ while running:
                 playerX_change = 0
 
     playerX += playerX_change
+
+    # Bounding for spaceship
+    # Spaceship is 64 px and width is 800 px
+    # width - spaceship -> 800 - 64 = 736
+    # 0 < playerX < 736
+    if playerX < 0:
+        playerX = 0
+    elif playerX > 736:
+        playerX = 736
+
     player(playerX, playerY)
     pygame.display.update()  # Very important line to display changes
