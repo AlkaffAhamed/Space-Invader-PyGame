@@ -14,6 +14,7 @@ pygame.display.set_icon(icon)
 # Player
 playerImg = pygame.image.load("res/player.png")
 playerX, playerY = 370, 480
+playerX_change = 0
 
 
 def player(x, y):
@@ -32,17 +33,15 @@ while running:
 
         # Keystroke events
         if event.type == pygame.KEYDOWN:
-            print("Key pressed")
             if event.key == pygame.K_LEFT:
-                print("Left key pressed!")
+                playerX_change = -0.5
             if event.key == pygame.K_RIGHT:
-                print("Right key pressed!")
+                playerX_change = 0.5
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                print("Key released!")
-            else:
-                print("Random Key released!")
+                playerX_change = 0
 
+    playerX += playerX_change
     player(playerX, playerY)
     pygame.display.update()  # Very important line to display changes
