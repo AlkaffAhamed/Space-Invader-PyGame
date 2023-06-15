@@ -7,10 +7,11 @@ pygame.init()
 # Create the screen (800x600)
 screen = pygame.display.set_mode((800, 600))
 
-# Title and icon
+# Title, background and icon
 pygame.display.set_caption("Space Invader PyGame")
 icon = pygame.image.load("res/ufo.png")
 pygame.display.set_icon(icon)
+background = pygame.image.load("res/background.png")
 
 # Player
 playerImg = pygame.image.load("res/player.png")
@@ -25,7 +26,7 @@ def player(x, y):
 # Enemy
 enemyImg = pygame.image.load("res/enemy.png")
 enemyX, enemyY = random.randint(0, 800), random.randint(50, 150)
-enemyX_change, enemyY_change = 0.3, 40
+enemyX_change, enemyY_change = 3, 40
 
 
 def enemy(x, y):
@@ -35,8 +36,8 @@ def enemy(x, y):
 # Game Loop with Quit event
 running = True
 while running:
-    # Black background colour (RGB values)
-    screen.fill((0, 0, 0))
+    # Background
+    screen.blit(background,(0,0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -45,9 +46,9 @@ while running:
         # Keystroke events
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerX_change = -0.5
+                playerX_change = -5
             if event.key == pygame.K_RIGHT:
-                playerX_change = 0.5
+                playerX_change = 5
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -69,10 +70,10 @@ while running:
     # Once boundary is hit, enemy moves down by 40 px
     enemyX += enemyX_change
     if enemyX <= 0:
-        enemyX_change = 0.3
+        enemyX_change = 3
         enemyY += enemyY_change
     elif enemyX >= 736:
-        enemyX_change = -0.3
+        enemyX_change = -3
         enemyY += enemyY_change
 
     player(playerX, playerY)
