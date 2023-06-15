@@ -43,7 +43,7 @@ bullet_state = "ready"
 def fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
-    screen.blit(bulletImg, (x, y))
+    screen.blit(bulletImg, (x + 16, y + 10))
 
 
 # Game Loop with Quit event
@@ -92,8 +92,10 @@ while running:
         enemyY += enemyY_change
 
     # Bullet movement
-    if bullet_state=="fire":
-        fire_bullet(playerX,bulletY)
+    if bulletY < 0:
+        bulletY, bullet_state = 480, "ready"
+    if bullet_state == "fire":
+        fire_bullet(playerX, bulletY)
         bulletY -= bulletY_change
 
     player(playerX, playerY)
