@@ -30,8 +30,19 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Animating the Spaceship to move
-    playerX += 0.1
-    playerY -= 0.1
+        # Keystroke events
+        if event.type == pygame.KEYDOWN:
+            print("Key pressed")
+            if event.key == pygame.K_LEFT:
+                print("Left key pressed!")
+            if event.key == pygame.K_RIGHT:
+                print("Right key pressed!")
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                print("Key released!")
+            else:
+                print("Random Key released!")
+
     player(playerX, playerY)
     pygame.display.update()  # Very important line to display changes
