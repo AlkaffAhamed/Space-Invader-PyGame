@@ -25,13 +25,23 @@ def player(x, y):
 
 
 # Enemy
-enemyImg = pygame.image.load("res/enemy.png")
-enemyX, enemyY = random.randint(0, 735), random.randint(50, 150)
-enemyX_change, enemyY_change = 3, 40
+enemyImg = []
+enemyX = []
+enemyY = []
+enemyX_change = []
+enemyY_change = []
+no_of_enemies = 6
+
+for i in range(no_of_enemies):
+    enemyImg.append(pygame.image.load("res/enemy.png"))
+    enemyX.append(random.randint(0, 735))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(3)
+    enemyY_change.append(40)
 
 
-def enemy(x, y):
-    screen.blit(enemyImg, (x, y))
+def enemy(x, y, i):
+    screen.blit(enemyImg[i], (x, y))
 
 
 # Bullet
@@ -94,13 +104,25 @@ while running:
     # Enemy movement
     # 0 < enemyX < 736
     # Once boundary is hit, enemy moves down by 40 px
-    enemyX += enemyX_change
-    if enemyX <= 0:
-        enemyX_change = 3
-        enemyY += enemyY_change
-    elif enemyX >= 736:
-        enemyX_change = -3
-        enemyY += enemyY_change
+    # for loop to iterate through all the enemies
+    for i in range(no_of_enemies):
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 3
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 736:
+            enemyX_change[i] = -3
+            enemyY[i] += enemyY_change[i]
+
+        # Collision Detection (moved inside the for loop)
+        if isCollision(bulletX, bulletY, enemyX[i], enemyY[i]):
+            bulletY, bullet_state = 480, "ready"
+            score += 1
+            print(f"Score={score}")
+            enemyX[i], enemyY[i] = random.randint(0, 735), random.randint(50, 150)
+
+        # Draw the enemy moved inside for loop
+        enemy(enemyX[i], enemyY[i], i)
 
     # Bullet movement
     if bulletY < 0:
@@ -109,13 +131,6 @@ while running:
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
-    # Collision Detection
-    if isCollision(bulletX, bulletY, enemyX, enemyY):
-        bulletY, bullet_state = 480, "ready"
-        score += 1
-        print(f"Score={score}")
-        enemyX, enemyY = random.randint(0, 735), random.randint(50, 150)
-
     player(playerX, playerY)
-    enemy(enemyX, enemyY)
+
     pygame.display.update()  # Very important line to display changes
