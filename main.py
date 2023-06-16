@@ -63,7 +63,15 @@ def isCollision(x1, y1, x2, y2):
     return dist < 27
 
 
-score = 0
+score_value = 0
+font = pygame.font.Font("freesansbold.ttf", 20)
+textX, textY = 10, 10
+
+
+def show_score():
+    score = font.render(f"Score: {score_value}", True, (255, 255, 255))
+    screen.blit(score, (textX, textY))
+
 
 # Game Loop with Quit event
 running = True
@@ -117,8 +125,8 @@ while running:
         # Collision Detection (moved inside the for loop)
         if isCollision(bulletX, bulletY, enemyX[i], enemyY[i]):
             bulletY, bullet_state = 480, "ready"
-            score += 1
-            print(f"Score={score}")
+            score_value += 1
+            print(f"Score={score_value}")
             enemyX[i], enemyY[i] = random.randint(0, 735), random.randint(50, 150)
 
         # Draw the enemy moved inside for loop
@@ -132,5 +140,6 @@ while running:
         bulletY -= bulletY_change
 
     player(playerX, playerY)
+    show_score()
 
     pygame.display.update()  # Very important line to display changes
