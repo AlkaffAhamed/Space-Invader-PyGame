@@ -69,11 +69,17 @@ def isCollision(x1, y1, x2, y2):
 score_value = 0
 font = pygame.font.Font("freesansbold.ttf", 20)
 textX, textY = 10, 10
+gameover_font = pygame.font.Font("freesansbold.ttf", 64)
 
 
 def show_score():
     score = font.render(f"Score: {score_value}", True, (255, 255, 255))
     screen.blit(score, (textX, textY))
+
+
+def gameover_text():
+    gameover_tx = gameover_font.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(gameover_tx, (200, 250))
 
 
 # Game Loop with Quit event
@@ -119,6 +125,13 @@ while running:
     # Once boundary is hit, enemy moves down by 40 px
     # for loop to iterate through all the enemies
     for i in range(no_of_enemies):
+        # Test for Game Over
+        if enemyY[i] > 440:
+            for j in range(no_of_enemies):
+                enemyY[j] = 2000
+            gameover_text()
+            break
+
         enemyX[i] += enemyX_change[i]
         if enemyX[i] <= 0:
             enemyX_change[i] = 3
